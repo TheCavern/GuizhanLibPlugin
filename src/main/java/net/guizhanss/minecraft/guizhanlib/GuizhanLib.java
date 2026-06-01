@@ -33,7 +33,7 @@ public class GuizhanLib extends AbstractAddon {
     private final boolean isUnitTest;
 
     public GuizhanLib() {
-        super("ybw0014", "GuizhanLibPlugin", "master", "auto-update");
+        super("Thecavern", "GuizhanLibPlugin", "master", "auto-update");
 
         // a hacky way to check if mockbukkit is used
         // TODO: change it when updating mockbukkit to v4
@@ -115,7 +115,7 @@ public class GuizhanLib extends AbstractAddon {
     @Override
     protected void autoUpdate() {
         if (getPluginVersion().startsWith("Build")) {
-            GuizhanUpdater.start(this, getFile(), "ybw0014", "GuizhanLibPlugin", "master");
+            GuizhanUpdater.start(this, getFile(), "Thecavern", "GuizhanLibPlugin", "master");
         }
     }
 }

@@ -19,6 +19,8 @@ public final class ConfigManager {
     private final Config updaterConfig;
 
     @Getter
+    private final String requestedLang;
+    @Getter
     private final boolean debugEnabled;
     @Getter
     private final boolean autoUpdateEnabled;
@@ -32,6 +34,7 @@ public final class ConfigManager {
         updaterConfig = new Config(plugin, "updater.yml");
 
         debugEnabled = config.getBoolean("debug", false);
+        requestedLang = config.getString("lang", "en_US");
         autoUpdateEnabled = config.getBoolean("auto-update", true);
         updaterLocation = config.getString("updater.location", "global");
         updaterLang = config.getString("updater.lang", "en_US");

@@ -1,6 +1,6 @@
 # Whether to enable auto update module (see updater.yml for details)
 # 是否开启自动更新模块（详见 updater.yml）
-auto-update: true
+auto-update: false
 
 # Universal Updater Settings
 # 统一更新设置
@@ -22,3 +22,7 @@ updater:
 # Whether to print debug messages in console.
 # 是否在控制台输出调试信息。
 debug: false
+
+
+# Set language for LanguageManager
+lang: en_US # can be zh_CN
