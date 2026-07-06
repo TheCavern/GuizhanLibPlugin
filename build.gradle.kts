@@ -5,15 +5,10 @@ plugins {
     java
     `java-library`
     `maven-publish`
-    signing
     id("io.freefair.lombok") version "8.13.1"
     id("com.gradleup.shadow") version "9.3.0"
     id("de.eldoria.plugin-yml.bukkit") version "0.8.0"
     id("xyz.jpenilla.run-paper") version "2.3.1"
-}
-
-val gitHashProvider = providers.exec {
-    commandLine("git", "rev-parse", "--short", "HEAD")
 }
 
 repositories {
@@ -133,13 +128,6 @@ publishing {
                 }
             }
         }
-    }
-}
-
-signing {
-    // no need to sign when building
-    if (!version.toString().startsWith("Build")) {
-        sign(publishing.publications["maven"])
     }
 }
 
