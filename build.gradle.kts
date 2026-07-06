@@ -7,10 +7,13 @@ plugins {
     `maven-publish`
     signing
     id("io.freefair.lombok") version "8.13.1"
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
     id("com.gradleup.shadow") version "9.3.0"
     id("de.eldoria.plugin-yml.bukkit") version "0.8.0"
     id("xyz.jpenilla.run-paper") version "2.3.1"
+}
+
+val gitHashProvider = providers.exec {
+    commandLine("git", "rev-parse", "--short", "HEAD")
 }
 
 repositories {
@@ -76,6 +79,18 @@ tasks.shadowJar {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "CavernMaven"
+            url = uri("https://mvn.thecavern.net/slimefun")
+            credentials {
+                username = (project.findProperty("CavernUsername") ?: System.getenv("CAVERN_USERNAME")) as String?
+                password = (project.findProperty("CavernPassword") ?: System.getenv("CAVERN_PASSWORD")) as String?
+            }
+        }
+    }
+
+
     publications {
         create<MavenPublication>("maven") {
             from(components["shadow"])
@@ -90,12 +105,12 @@ publishing {
             pom {
                 name.set("GuizhanLibPlugin")
                 description.set("A library plugin for Slimefun addon development.")
-                url.set("https://github.com/ybw0014/GuizhanLibPlugin")
+                url.set("https://github.com/TheCavern/GuizhanLibPlugin")
 
                 licenses {
                     license {
                         name.set("GPL-3.0 license")
-                        url.set("https://github.com/ybw0014/GuizhanLibPlugin/blob/master/LICENSE")
+                        url.set("https://github.com/TheCavern/GuizhanLibPlugin/blob/master/LICENSE")
                         distribution.set("repo")
                     }
                 }
@@ -105,12 +120,16 @@ publishing {
                         name.set("ybw0014")
                         url.set("https://ybw0014.dev/")
                     }
+                    developer {
+                        name.set("TheCavern")
+                        url.set("https://thecavern.net")
+                    }
                 }
 
                 scm {
-                    connection.set("scm:git:git://github.com/ybw0014/GuizhanLibPlugin.git")
-                    developerConnection.set("scm:git:ssh://github.com:ybw0014/GuizhanLibPlugin.git")
-                    url.set("https://github.com/ybw0014/GuizhanLibPlugin/tree/master")
+                    connection.set("scm:git:https://github.com/TheCavern/GuizhanLibPlugin.git")
+                    developerConnection.set("scm:git:https://github.com:TheCavern/GuizhanLibPlugin.git")
+                    url.set("https://github.com/TheCavern/GuizhanLibPlugin/tree/master")
                 }
             }
         }
@@ -124,21 +143,12 @@ signing {
     }
 }
 
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
-        }
-    }
-}
-
 bukkit {
     main = "$mainPackage.GuizhanLib"
     apiVersion = "1.18"
-    authors = listOf("ybw0014")
+    authors = listOf("ybw0014", "TheCavern")
     description = "A library plugin for Simplified Chinese Slimefun addons."
-    website = "https://github.com/ybw0014/GuizhanLibPlugin"
+    website = "https://github.com/TheCavern/GuizhanLibPlugin"
     depend = listOf("Slimefun")
 }
 
